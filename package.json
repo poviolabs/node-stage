@@ -1,11 +1,33 @@
 {
   "name": "@poviolabs/node-stage",
-  "version": "1.0.15",
+  "version": "1.0.16",
   "packageManager": "yarn@3.2.0",
   "main": "./dist/index.js",
   "exports": {
-    "./*": "./dist/*",
-    ".": "./dist/index.d.ts"
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./cli": {
+      "default": "./dist/helpers/cli.helper.js",
+      "types": "./dist/helpers/cli.helper.d.ts"
+    },
+    "./git": {
+      "default": "./dist/helpers/git.helper.js",
+      "types": "./dist/helpers/git.helper.d.ts"
+    },
+    "./yargs": {
+      "default": "./dist/helpers/yargs.helper.js",
+      "types": "./dist/helpers/yargs.helper.d.ts"
+    },
+    "./version": {
+      "default": "./dist/helpers/version.helper.js",
+      "types": "./dist/helpers/version.helper.d.ts"
+    },
+    "./config": {
+      "default": "./dist/helpers/config.helper.js",
+      "types": "./dist/helpers/config.helper.d.ts"
+    }
   },
   "bin": "./dist/sh.js",
   "scripts": {
