@@ -1009,7 +1009,7 @@ __metadata:
     yaml: ^2.0.0
     yargs: ^17.4.1
   bin:
-    node-stage: ./dist/cjs/cli/index.js
+    node-stage: ./dist/sh.js
   languageName: unknown
   linkType: soft
 

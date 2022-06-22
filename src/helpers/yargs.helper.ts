@@ -3,7 +3,6 @@ import { Options } from "yargs";
 import path from "path";
 
 import { loadConfig, Config } from "./config.helper";
-import { logWarning } from "./cli.helper";
 import { getRelease, ReleaseStrategy } from "./git.helper";
 
 interface IOptionProperties extends Options {
@@ -126,7 +125,7 @@ export async function loadYargsConfig<T extends YargsOptions>(
         (argv[name as keyof typeof argv] as any)
     ) {
       if (process.env[o.envAlias] !== undefined) {
-        logWarning(`Overwriting ${o.envAlias}!`);
+        console.warn(`Overwriting ${o.envAlias}!`);
       }
       process.env[o.envAlias] = argv[name as keyof typeof argv] as any;
     }

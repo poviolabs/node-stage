@@ -17,4 +17,5 @@ Object.defineProperty(exports, "__esModule", { value: true });
 __exportStar(require("./helpers/yargs.helper"), exports);
 __exportStar(require("./helpers/git.helper"), exports);
 __exportStar(require("./helpers/config.helper"), exports);
+__exportStar(require("./helpers/version.helper"), exports);
 //# sourceMappingURL=index.js.map

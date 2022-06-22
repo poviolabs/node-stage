@@ -3,8 +3,9 @@
 import yargs from "yargs";
 import { hideBin } from "yargs/helpers";
 
-import { command as envCommand } from "./env.command";
-import { getVersion, logError, logInfo } from "../helpers/cli.helper";
+import { command as envCommand } from "./commands/env.command";
+import { logError, logInfo } from "./helpers/cli.helper";
+import { getVersion } from "./helpers/version.helper";
 
 yargs(hideBin(process.argv))
   .version(getVersion() || "unknown")

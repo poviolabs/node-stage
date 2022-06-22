@@ -6,10 +6,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const yargs_1 = __importDefault(require("yargs"));
 const helpers_1 = require("yargs/helpers");
-const env_command_1 = require("./env.command");
-const cli_helper_1 = require("../helpers/cli.helper");
+const env_command_1 = require("./commands/env.command");
+const cli_helper_1 = require("./helpers/cli.helper");
+const version_helper_1 = require("./helpers/version.helper");
 (0, yargs_1.default)((0, helpers_1.hideBin)(process.argv))
-    .version((0, cli_helper_1.getVersion)() || "unknown")
+    .version((0, version_helper_1.getVersion)() || "unknown")
     .scriptName("node-stage")
     .command(env_command_1.command)
     .help()
@@ -31,4 +32,4 @@ const cli_helper_1 = require("../helpers/cli.helper");
     process.exit(1);
 })
     .parse();
-//# sourceMappingURL=index.js.map
+//# sourceMappingURL=sh.js.map

@@ -1,6 +1,4 @@
 import chalk from "chalk";
-import fs from "fs";
-import path from "path";
 import * as Console from "console";
 import Prompt from "prompt-sync";
 import process from "process";
@@ -12,22 +10,6 @@ const log = Console.log;
 const prompt = Prompt({ sigint: true });
 
 export const nonInteractive = !!process.env.CI;
-
-/**
- * Fetch the version from package.json
- */
-export function getVersion(): string | undefined {
-  const packageJsonPath = path.join(__dirname, "..", "..", "package.json");
-  if (fs.existsSync(packageJsonPath)) {
-    try {
-      const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, "utf8"));
-      return packageJson.version as string;
-    } catch (e) {
-      logError((e as Error).toString());
-    }
-  }
-  return undefined;
-}
 
 /**
  * Print a variable, color it magenta if it's different from the default

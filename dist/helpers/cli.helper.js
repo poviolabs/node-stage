@@ -26,10 +26,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getToolEnvironment = exports.confirm = exports.promptVar = exports.logBanner = exports.logError = exports.logWarning = exports.logSuccess = exports.logNotice = exports.logVerbose = exports.logInfo = exports.logVariable = exports.getVersion = exports.nonInteractive = exports.chk = void 0;
+exports.getToolEnvironment = exports.confirm = exports.promptVar = exports.logBanner = exports.logError = exports.logWarning = exports.logSuccess = exports.logNotice = exports.logVerbose = exports.logInfo = exports.logVariable = exports.nonInteractive = exports.chk = void 0;
 const chalk_1 = __importDefault(require("chalk"));
-const fs_1 = __importDefault(require("fs"));
-const path_1 = __importDefault(require("path"));
 const Console = __importStar(require("console"));
 const prompt_sync_1 = __importDefault(require("prompt-sync"));
 const process_1 = __importDefault(require("process"));
@@ -38,23 +36,6 @@ exports.chk = new chalk_1.default.Instance({ level: 2 });
 const log = Console.log;
 const prompt = (0, prompt_sync_1.default)({ sigint: true });
 exports.nonInteractive = !!process_1.default.env.CI;
-/**
- * Fetch the version from package.json
- */
-function getVersion() {
-    const packageJsonPath = path_1.default.join(__dirname, "..", "..", "package.json");
-    if (fs_1.default.existsSync(packageJsonPath)) {
-        try {
-            const packageJson = JSON.parse(fs_1.default.readFileSync(packageJsonPath, "utf8"));
-            return packageJson.version;
-        }
-        catch (e) {
-            logError(e.toString());
-        }
-    }
-    return undefined;
-}
-exports.getVersion = getVersion;
 /**
  * Print a variable, color it magenta if it's different from the default
  * @param name

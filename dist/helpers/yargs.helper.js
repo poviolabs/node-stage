@@ -7,7 +7,6 @@ exports.loadYargsConfig = exports.getYargsOptions = exports.getYargsOption = exp
 require("reflect-metadata");
 const path_1 = __importDefault(require("path"));
 const config_helper_1 = require("./config.helper");
-const cli_helper_1 = require("./cli.helper");
 const git_helper_1 = require("./git.helper");
 const optionsKey = Symbol("options_key");
 function Option(properties) {
@@ -80,7 +79,7 @@ async function loadYargsConfig(cls, _argv, configDefaultBase) {
             process.env[o.envAlias] !==
                 argv[name]) {
             if (process.env[o.envAlias] !== undefined) {
-                (0, cli_helper_1.logWarning)(`Overwriting ${o.envAlias}!`);
+                console.warn(`Overwriting ${o.envAlias}!`);
             }
             process.env[o.envAlias] = argv[name];
         }
