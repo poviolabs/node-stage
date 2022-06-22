@@ -37,7 +37,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@slack/web-api", "npm:6.7.2"],\
             ["@swc/core", "npm:1.2.204"],\
             ["@swc/jest", "virtual:76fed1a7325cbaaf4cf6f19a79c4f33b3c946d76f18563838ddff0aaa5d18c99719cf1ddffd175091a75ea2b276ad4907615a658d0bb6409160f9bee8e7023d2#npm:0.2.21"],\
-            ["@types/diff", "npm:5.0.2"],\
             ["@types/eslint", "npm:8.4.3"],\
             ["@types/eslint-plugin-prettier", "npm:3.1.0"],\
             ["@types/jest", "npm:27.5.2"],\
@@ -50,7 +49,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@typescript-eslint/parser", "virtual:76fed1a7325cbaaf4cf6f19a79c4f33b3c946d76f18563838ddff0aaa5d18c99719cf1ddffd175091a75ea2b276ad4907615a658d0bb6409160f9bee8e7023d2#npm:5.29.0"],\
             ["@vercel/ncc", "npm:0.33.4"],\
             ["chalk", "npm:4.1.2"],\
-            ["diff", "npm:5.1.0"],\
             ["dotenv", "npm:16.0.1"],\
             ["eslint", "npm:8.18.0"],\
             ["eslint-config-prettier", "virtual:76fed1a7325cbaaf4cf6f19a79c4f33b3c946d76f18563838ddff0aaa5d18c99719cf1ddffd175091a75ea2b276ad4907615a658d0bb6409160f9bee8e7023d2#npm:8.5.0"],\
@@ -1468,7 +1466,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@slack/web-api", "npm:6.7.2"],\
             ["@swc/core", "npm:1.2.204"],\
             ["@swc/jest", "virtual:76fed1a7325cbaaf4cf6f19a79c4f33b3c946d76f18563838ddff0aaa5d18c99719cf1ddffd175091a75ea2b276ad4907615a658d0bb6409160f9bee8e7023d2#npm:0.2.21"],\
-            ["@types/diff", "npm:5.0.2"],\
             ["@types/eslint", "npm:8.4.3"],\
             ["@types/eslint-plugin-prettier", "npm:3.1.0"],\
             ["@types/jest", "npm:27.5.2"],\
@@ -1481,7 +1478,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@typescript-eslint/parser", "virtual:76fed1a7325cbaaf4cf6f19a79c4f33b3c946d76f18563838ddff0aaa5d18c99719cf1ddffd175091a75ea2b276ad4907615a658d0bb6409160f9bee8e7023d2#npm:5.29.0"],\
             ["@vercel/ncc", "npm:0.33.4"],\
             ["chalk", "npm:4.1.2"],\
-            ["diff", "npm:5.1.0"],\
             ["dotenv", "npm:16.0.1"],\
             ["eslint", "npm:8.18.0"],\
             ["eslint-config-prettier", "virtual:76fed1a7325cbaaf4cf6f19a79c4f33b3c946d76f18563838ddff0aaa5d18c99719cf1ddffd175091a75ea2b276ad4907615a658d0bb6409160f9bee8e7023d2#npm:8.5.0"],\
@@ -1835,15 +1831,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["@types/babel__traverse", "npm:7.17.1"],\
             ["@babel/types", "npm:7.18.4"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
-      ["@types/diff", [\
-        ["npm:5.0.2", {\
-          "packageLocation": "./.yarn/cache/@types-diff-npm-5.0.2-cc002907d4-8fbc419b5a.zip/node_modules/@types/diff/",\
-          "packageDependencies": [\
-            ["@types/diff", "npm:5.0.2"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -3151,13 +3138,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/diff-npm-4.0.2-73133c7102-f2c09b0ce4.zip/node_modules/diff/",\
           "packageDependencies": [\
             ["diff", "npm:4.0.2"]\
-          ],\
-          "linkType": "HARD"\
-        }],\
-        ["npm:5.1.0", {\
-          "packageLocation": "./.yarn/cache/diff-npm-5.1.0-d24d222280-c7bf0df7c9.zip/node_modules/diff/",\
-          "packageDependencies": [\
-            ["diff", "npm:5.1.0"]\
           ],\
           "linkType": "HARD"\
         }]\

@@ -17,7 +17,7 @@ export const nonInteractive = !!process.env.CI;
  * Fetch the version from package.json
  */
 export function getVersion(): string | undefined {
-  const packageJsonPath = path.join(__dirname, "..", "package.json");
+  const packageJsonPath = path.join(__dirname, "..", "..", "package.json");
   if (fs.existsSync(packageJsonPath)) {
     try {
       const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, "utf8"));
@@ -109,17 +109,16 @@ export async function confirm(message: string): Promise<boolean> {
   return (await prompt(message, "yes")) === "yes";
 }
 
-export async function printEnvironment(argv: { pwd: string; stage?: string }) {
-  logBanner(`ECS Build ${getVersion()}`);
-
-  logVariable("PWD", argv.pwd);
-  logVariable("NODE_VERSION", process.version);
-
-  logVariable("GIT_CLI_VERSION", await getGitVersion(argv.pwd));
-
-  if (argv.stage) {
-    // get current STAGE if set
-    // CI would not use this for builds
-    logVariable("STAGE", argv.stage);
+export async function getToolEnvironment(argv: {
+  pwd: string;
+  stage?: string;
+}): Promise<Record<string, string>> {
+  const env: Record<string, string> = {
+    nodeVersion: process.version,
+  };
+  const gitCliVersion = await getGitVersion(argv.pwd);
+  if (gitCliVersion) {
+    env.gitCliVersion = gitCliVersion;
   }
+  return env;
 }

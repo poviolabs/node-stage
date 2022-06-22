@@ -20,7 +20,12 @@ import {
   getShortSha,
   ReleaseStrategy,
 } from "~helpers/git.helper";
-import { logBanner, logVariable } from "~helpers/cli.helper";
+import {
+  getToolEnvironment,
+  getVersion,
+  logBanner,
+  logVariable,
+} from "~helpers/cli.helper";
 
 class SlackOptions implements YargsOptions {
   @Option({ envAlias: "PWD", demandOption: true })
@@ -155,6 +160,10 @@ export const command: yargs.CommandModule = {
     });
 
     if (argv.verbose) {
+      logBanner(`NodeStage ${getVersion()}`);
+      for (const [k, v] of Object.entries(await getToolEnvironment(argv))) {
+        logVariable(k, v);
+      }
       logBanner("Variables");
       for (const [k] of Object.entries(getOptions(SlackOptions)).filter(
         ([k]) => k !== "accessToken"
@@ -166,8 +175,6 @@ export const command: yargs.CommandModule = {
     }
 
     if (argv.dryRun) {
-      logBanner("Slack Message");
-      console.log(message);
       return;
     }
 
