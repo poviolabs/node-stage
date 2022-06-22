@@ -5,7 +5,7 @@ import * as Console from "console";
 import Prompt from "prompt-sync";
 import process from "process";
 
-import { getGitVersion } from "~helpers/git.helper";
+import { getGitVersion } from "./git.helper";
 
 export const chk = new chalk.Instance({ level: 2 });
 const log = Console.log;

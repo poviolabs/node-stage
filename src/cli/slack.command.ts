@@ -11,21 +11,21 @@ import {
   Option,
   YargsOptions,
   loadYargsConfig,
-  getOptions,
-} from "~helpers/yargs.helper";
+  getYargsOption,
+} from "../helpers/yargs.helper";
 
 import {
   getCommitMessage,
   getSha,
   getShortSha,
   ReleaseStrategy,
-} from "~helpers/git.helper";
+} from "../helpers/git.helper";
 import {
   getToolEnvironment,
   getVersion,
   logBanner,
   logVariable,
-} from "~helpers/cli.helper";
+} from "../helpers/cli.helper";
 
 class SlackOptions implements YargsOptions {
   @Option({ envAlias: "PWD", demandOption: true })
@@ -139,12 +139,11 @@ export const command: yargs.CommandModule = {
     return y
       .options(getYargsOptions(SlackOptions))
       .middleware(async (_argv) => {
-        const config = (await loadYargsConfig(
+        return (await loadYargsConfig(
           SlackOptions,
           _argv as any,
           "slackNotify"
         )) as any;
-        return config;
       }, true);
   },
   handler: async (_argv) => {
@@ -165,7 +164,7 @@ export const command: yargs.CommandModule = {
         logVariable(k, v);
       }
       logBanner("Variables");
-      for (const [k] of Object.entries(getOptions(SlackOptions)).filter(
+      for (const [k] of Object.entries(getYargsOption(SlackOptions)).filter(
         ([k]) => k !== "accessToken"
       )) {
         logVariable(k, argv[k as keyof SlackOptions]);

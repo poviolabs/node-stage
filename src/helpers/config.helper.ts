@@ -247,3 +247,21 @@ function mergeDeep(target: any, ...sources: any[]) {
 function isObject(item: any) {
   return item && typeof item === "object" && !Array.isArray(item);
 }
+
+export function getVariable(config: Config, p: string): string {
+  let n = config;
+  for (const i of p.split(".")) {
+    if (i in n) {
+      n = n[i];
+    } else {
+      return "";
+    }
+  }
+  if (typeof n === "string") {
+    return n;
+  }
+  if (typeof n === "object") {
+    return JSON.stringify(n);
+  }
+  return "";
+}

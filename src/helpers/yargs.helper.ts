@@ -4,7 +4,7 @@ import path from "path";
 
 import { loadConfig, Config } from "./config.helper";
 import { logWarning } from "./cli.helper";
-import { getRelease, ReleaseStrategy } from "~helpers/git.helper";
+import { getRelease, ReleaseStrategy } from "./git.helper";
 
 interface IOptionProperties extends Options {
   envAlias?: string;
@@ -41,7 +41,9 @@ export function Option(properties: IOptionProperties) {
   };
 }
 
-export function getOptions<T>(target: any): Record<keyof T, IOptionProperties> {
+export function getYargsOption<T>(
+  target: any
+): Record<keyof T, IOptionProperties> {
   const options = Reflect.getMetadata(optionsKey, target.prototype);
   if (!options) {
     throw new Error(`Options for ${(target as any).name} were not defined`);
@@ -50,18 +52,21 @@ export function getOptions<T>(target: any): Record<keyof T, IOptionProperties> {
 }
 
 export function getYargsOptions<T>(target: any): Record<keyof T, Options> {
-  return Object.entries(getOptions(target)).reduce((a, [property, options]) => {
-    // @ts-ignore
-    a[property] = Object.fromEntries(
-      Object.entries(options).filter(
-        ([optionName, optionValue]) =>
-          !["envAlias", "envAliases", "configAlias", "default"].includes(
-            optionName
-          )
-      )
-    );
-    return a;
-  }, {} as Record<keyof T, Options>);
+  return Object.entries(getYargsOption(target)).reduce(
+    (a, [property, options]) => {
+      // @ts-ignore
+      a[property] = Object.fromEntries(
+        Object.entries(options).filter(
+          ([optionName, optionValue]) =>
+            !["envAlias", "envAliases", "configAlias", "default"].includes(
+              optionName
+            )
+        )
+      );
+      return a;
+    },
+    {} as Record<keyof T, Options>
+  );
 }
 
 export interface YargsOptions {
@@ -101,7 +106,7 @@ export async function loadYargsConfig<T extends YargsOptions>(
     config = loadConfig(argv.pwd, argv.stage);
   }
 
-  for (const [name, o] of Object.entries(getOptions(cls))) {
+  for (const [name, o] of Object.entries(getYargsOption(cls))) {
     if (["pwd", "stage", "config"].includes(name)) {
       continue;
     }

@@ -1,19 +1,19 @@
 {
   "name": "@poviolabs/node-stage",
-  "version": "1.0.2",
+  "version": "1.0.1",
   "packageManager": "yarn@3.2.0",
   "main": "dist/cjs/index.js",
-  "module": "dist/esm/index.js",
+  "bin": "./dist/cjs/cli/index.js",
   "types": "dist/types/index.d.js",
   "scripts": {
-    "build": "yarn version patch && yarn run build:cjs && yarn run build:types",
-    "build:cjs": "node tools/cleanup cjs && tsc -p ./tsconfig.cjs.json",
+    "build": "yarn clean && yarn version patch && yarn run build:cjs && yarn run build:types",
+    "build:cjs": "node tools/cleanup cjs && tsc -p ./tsconfig.cjs.json && chmod +x ./dist/cjs/cli/index.js",
     "build:types": "node tools/cleanup types && tsc -p ./tsconfig.types.json",
-    "build:cli": "yarn ncc build ./src/index.ts -m --no-source-map-register --stats-out ./dist/stats.json && chmod +x ./dist/index.js",
     "clean": "node tools/cleanup",
     "test": "jest --no-cache --runInBand",
     "test:cov": "jest --coverage --no-cache --runInBand",
-    "test:slack": "ts-node -r tsconfig-paths/register ./src/cli/index.ts --pwd ./test --stage test slack",
+    "test:cli": "./dist/cjs/cli/index.js --pwd ./test --stage test",
+    "test:ts-node:cli": "ts-node -r tsconfig-paths/register ./src/cli/index.ts --pwd ./test --stage test",
     "lint": "eslint ."
   },
   "files": [
