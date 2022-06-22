@@ -40,11 +40,11 @@ const config = await loadConfig("/path/to/config.yaml", process.env.STAGE);
 
 ## Options
 
-### --pwd
+#### --pwd
 
 Root from where to fetch `config.yaml` and the base for all relative paths.
 
-### --stage
+#### --stage
 
 The slug of the deployment (ie. prd/stg/dev). Used in config.yaml.
 
@@ -69,66 +69,16 @@ stages:
 CONFIG_PREFIX=app
 CONFIG_FILE=config.yaml
 
-## node-stage env
+## Command `node-stage env`
 
-### node-stage env var \[path-to-variable\]
+#### node-stage env var \[path-to-variable\]
 
 Fetches the variable at the specified path and returns it.
 
 Example:
 ```
-node-stage env var slackNotify.channelName
+node-stage env var moduleName.variableKey
 ```
-
-## node-stage slack
-
-#### Slack message config
-
-```yaml
-stages:
-  myapp-prd:
-    ecs_deploy:
-      slackChannel: C03AXDS9F2B
-      slackAutolinkPrefix: SP-
-      slackAutolinkTarget: https://github.com/poviolabs/ecs-deploy-cli/issues/
-      slackCommitPrefix: https://github.com/poviolabs/ecs-deploy-cli/commit/
-      slackProjectName: ECS-Deploy
-```
-
-```bash
-yarn ecs-deploy-cli slack --messageType success
-yarn ecs-deploy-cli slack --messageType failure
-yarn ecs-deploy-cli slack --messageType info --message A custom message!
-```
-
-### --message
-
-Any text appended to the Slack message
-
-```
-yarn ecs-deploy-cli slack --messageType success --message A custom message!
-```
-
-### --messageType
-
-- `success`
-- `failure`
-- `info`
-
-### --release
-
-Release of the build (ie the git sha) and is unique per code.
-
-### --appVersion
-
-Version of the deploy. Tied to a specific Release and Stage.
-If supplied with a semver format, the version will be prefixed with `${STAGE}`
-
-### --releaseStrategy
-
-- gitsha - make the same build for all stages
-- gitsha-stage - make a build based on the stage and git sha in cases where the build is different per stage
-
 
 ## Development
 
