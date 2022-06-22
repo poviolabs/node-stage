@@ -4,7 +4,8 @@
   "packageManager": "yarn@3.2.0",
   "main": "./dist/index.js",
   "exports": {
-    "./*": "./dist/*"
+    "./*": "./dist/*",
+    ".": "./dist/index.d.ts"
   },
   "bin": "./dist/sh.js",
   "scripts": {
