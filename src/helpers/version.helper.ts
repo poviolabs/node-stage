@@ -1,6 +1,6 @@
 import path from "path";
 import fs from "fs";
-import { logError } from "~helpers/cli.helper";
+import { logError } from "./cli.helper";
 
 /**
  * Fetch the version from package.json

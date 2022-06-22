@@ -12,12 +12,7 @@
     "baseUrl": "src",
     "sourceRoot": "/",
     "sourceMap": true,
-    "forceConsistentCasingInFileNames": true,
-    "paths": {
-      "~*": [
-        "*"
-      ]
-    }
+    "forceConsistentCasingInFileNames": true
   },
   "include": ["src/**/*", "test/**/*"],
   "ts-node": {

@@ -1,13 +1,19 @@
 {
   "name": "@poviolabs/node-stage",
-  "version": "1.0.12",
+  "version": "1.0.13",
   "packageManager": "yarn@3.2.0",
   "main": "dist/index.js",
   "exports": {
-    "./cli": "./dist/helpers/cli.helper.js"
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./cli": {
+      "default": "./dist/helpers/cli.helper.js",
+      "types": "./dist/helpers/cli.helper.d.ts"
+    }
   },
   "bin": "./dist/sh.js",
-  "types": "./dist/index.d.ts",
   "scripts": {
     "build": "yarn clean && yarn version patch && yarn run build:cjs",
     "build:cjs": "node tools/cleanup cjs && tsc -p ./tsconfig.json && chmod +x ./dist/sh.js",

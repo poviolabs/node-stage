@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.getVersion = void 0;
 const path_1 = __importDefault(require("path"));
 const fs_1 = __importDefault(require("fs"));
-const cli_helper_1 = require("~helpers/cli.helper");
+const cli_helper_1 = require("./cli.helper");
 /**
  * Fetch the version from package.json
  */
