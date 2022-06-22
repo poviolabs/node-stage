@@ -15,3 +15,6 @@ node_modules
 .DS_Store
 
 /dist/stats.json
+
+# config
+config.local.yaml

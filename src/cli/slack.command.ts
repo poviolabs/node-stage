@@ -11,6 +11,7 @@ import {
   Option,
   YargsOptions,
   loadYargsConfig,
+  getOptions,
 } from "~helpers/yargs.helper";
 
 import {
@@ -19,6 +20,7 @@ import {
   getShortSha,
   ReleaseStrategy,
 } from "~helpers/git.helper";
+import { logBanner, logVariable } from "~helpers/cli.helper";
 
 class SlackOptions implements YargsOptions {
   @Option({ envAlias: "PWD", demandOption: true })
@@ -34,14 +36,14 @@ class SlackOptions implements YargsOptions {
     envAlias: "SLACK_ACCESS_TOKEN",
     demandOption: true,
   })
-  slackAccessToken!: string;
+  accessToken!: string;
 
   @Option({
     envAlias: "SLACK_CHANNEL",
     configAlias: (c) => c.slackNotify?.channel,
     demandOption: true,
   })
-  slackChannel!: string;
+  channel!: string;
 
   @Option({
     envAlias: "RELEASE",
@@ -62,7 +64,6 @@ class SlackOptions implements YargsOptions {
     envAlias: "APP_VERSION",
     envAliases: ["CIRCLE_TAG", "BITBUCKET_TAG"],
     type: "string",
-    alias: "ecsVersion",
   })
   appVersion!: string;
 
@@ -75,6 +76,18 @@ class SlackOptions implements YargsOptions {
 
   @Option({ demandOption: false })
   message!: string;
+
+  @Option({ demandOption: false, describe: "Prefix of the Pull Requests" })
+  autolinkPrefix!: string;
+
+  @Option({ demandOption: false, describe: "Prefix of the Ticket url" })
+  autolinkTarget!: string;
+
+  @Option({ demandOption: false, describe: "Prefix of the Commit Url" })
+  commitPrefix!: string;
+
+  @Option({ demandOption: false, describe: "Name of the project" })
+  projectName!: string;
 
   @Option({
     envAlias: "BRANCH_NAME",
@@ -89,6 +102,16 @@ class SlackOptions implements YargsOptions {
     demandOption: false,
   })
   buildUrl!: string;
+
+  @Option({
+    demandOption: false,
+  })
+  verbose!: boolean;
+
+  @Option({
+    demandOption: false,
+  })
+  dryRun!: boolean;
 
   @Option({
     envAlias: "REPO_NAME",
@@ -111,97 +134,44 @@ export const command: yargs.CommandModule = {
     return y
       .options(getYargsOptions(SlackOptions))
       .middleware(async (_argv) => {
-        return (await loadYargsConfig(
+        const config = (await loadYargsConfig(
           SlackOptions,
           _argv as any,
           "slackNotify"
         )) as any;
+        return config;
       }, true);
   },
   handler: async (_argv) => {
     const argv = (await _argv) as unknown as SlackOptions;
 
-    const { service, pwd } = argv;
-    const commitMessage = await getCommitMessage(pwd);
+    const { pwd, accessToken, channel } = argv;
 
-    const {
-      appVersion,
-      branchName,
-      repoName,
-      buildUrl,
-      slackAccessToken,
-      slackChannel,
-    } = argv;
+    const { message, text } = slackTemplate({
+      ...argv,
+      gitSha: await getSha(pwd),
+      gitShortSha: await getShortSha(pwd),
+      commitMessage: await getCommitMessage(pwd),
+    });
 
-    const slackAutolinkPrefix = argv.config.slackNotify?.autolinkPrefix;
-    const slackAutolinkTarget = argv.config.slackNotify?.autolinkTarget;
-    const slackCommitPrefix = argv.config.slackNotify?.commitPrefix;
-    const slackProjectName = argv.config.slackNotify?.projectName;
-
-    const gitSha = await getSha(pwd);
-    const gitShortSha = await getShortSha(pwd);
-
-    const web = new WebClient(slackAccessToken);
-
-    const templates = {
-      success: {
-        icon: ":greencircle:",
-      },
-      info: {
-        icon: ":information_source:",
-      },
-      failure: {
-        icon: ":red_circle:",
-      },
-    };
-
-    let message = `${templates[argv.messageType].icon} `;
-
-    if (slackProjectName) {
-      message += `*${slackProjectName}* `;
+    if (argv.verbose) {
+      logBanner("Variables");
+      for (const [k] of Object.entries(getOptions(SlackOptions)).filter(
+        ([k]) => k !== "accessToken"
+      )) {
+        logVariable(k, argv[k as keyof SlackOptions]);
+      }
+      logBanner("Slack Message");
+      console.log(message);
     }
 
-    const deployName = `${repoName ? `${repoName}:` : ""}${
-      appVersion || branchName || ""
-    }`;
-
-    let text = `[${templates[argv.messageType].icon}] ${deployName}`;
-
-    if (argv.message) {
-      text += ` ${argv.message}`;
+    if (argv.dryRun) {
+      logBanner("Slack Message");
+      console.log(message);
+      return;
     }
 
-    if (buildUrl) {
-      message += `<${buildUrl}|${deployName}>`;
-    } else {
-      message += deployName;
-    }
-
-    if (service) {
-      message += ` Service: ${service}`;
-    }
-
-    if (slackCommitPrefix) {
-      message += `\n\t\t :memo: <${slackCommitPrefix}${gitSha}|${gitShortSha}>\t`;
-    } else {
-      message += `\n\t\t :memo: ${gitShortSha}\t`;
-    }
-
-    if (slackAutolinkTarget && slackAutolinkPrefix) {
-      message += `_${commitMessage.replace(
-        new RegExp(`\\b${slackAutolinkPrefix}[a-zA-Z0-9]+\\b`, "gm"),
-        (a) => {
-          return `<${slackAutolinkTarget}|${a}>`;
-        }
-      )}_`;
-    } else {
-      message += `_${commitMessage}_`;
-    }
-
-    if (argv.message) {
-      message += `\n${argv.message}`;
-    }
-
+    const web = new WebClient(accessToken);
     await web.chat.postMessage({
       blocks: [
         {
@@ -213,9 +183,87 @@ export const command: yargs.CommandModule = {
         },
       ],
       text,
-      channel: slackChannel,
+      channel: channel,
       unfurl_links: false,
       unfurl_media: false,
     });
   },
 };
+
+function slackTemplate(o: {
+  appVersion?: string;
+  branchName?: string;
+  repoName?: string;
+  buildUrl?: string;
+  autolinkPrefix?: string;
+  autolinkTarget?: string;
+  commitPrefix?: string;
+  projectName?: string;
+  commitMessage: string;
+  message?: string;
+  messageType: "success" | "info" | "failure";
+  gitSha: string;
+  gitShortSha: string;
+  service?: string;
+}) {
+  const templates = {
+    success: {
+      icon: ":large_green_circle:",
+    },
+    info: {
+      icon: ":information_source:",
+    },
+    failure: {
+      icon: ":red_circle:",
+    },
+  };
+
+  let out = `${templates[o.messageType].icon} `;
+
+  if (o.projectName) {
+    out += `*${o.projectName}* `;
+  }
+
+  const deployName = `${o.repoName ? `${o.repoName}:` : ""}${
+    o.appVersion || o.branchName || ""
+  }`;
+
+  let text = `[${templates[o.messageType].icon}] ${deployName}`;
+
+  if (o.message) {
+    text += ` ${o.message}`;
+  }
+
+  if (o.buildUrl) {
+    out += `<${o.buildUrl}|${deployName}>`;
+  } else {
+    out += deployName;
+  }
+
+  if (o.service) {
+    out += ` Service: ${o.service}`;
+  }
+
+  if (o.commitPrefix) {
+    out += `\n\t\t :memo: <${o.commitPrefix}${o.gitSha}|${o.gitShortSha}>\t`;
+  } else {
+    out += `\n\t\t :memo: ${o.gitShortSha}\t`;
+  }
+
+  if (o.autolinkTarget && o.autolinkPrefix) {
+    out += `_${o.commitMessage.replace(
+      new RegExp(`\\b${o.autolinkPrefix}[a-zA-Z0-9]+\\b`, "gm"),
+      (a: string) => {
+        return `<${o.autolinkTarget}|${a}>`;
+      }
+    )}_`;
+  } else {
+    out += `_${o.commitMessage}_`;
+  }
+
+  if (o.message) {
+    out += `\n${o.message}`;
+  }
+
+  return { text, message: out };
+}

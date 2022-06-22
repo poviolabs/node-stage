@@ -101,17 +101,16 @@ export async function loadYargsConfig<T extends YargsOptions>(
     config = loadConfig(argv.pwd, argv.stage);
   }
 
-  for (const [name, o] of Object.entries(getOptions(argv))) {
+  for (const [name, o] of Object.entries(getOptions(cls))) {
     if (["pwd", "stage", "config"].includes(name)) {
       continue;
     }
+
     argv[name as keyof typeof argv] =
       // yargs is always right
       _argv[name] ||
       // default to config if set
-      (configDefaultBase &&
-        config[configDefaultBase] &&
-        config[configDefaultBase][name]) ||
+      (configDefaultBase && config[configDefaultBase]?.[name]) ||
       // fallback to env
       (o.envAlias && process.env[o.envAlias]);
 

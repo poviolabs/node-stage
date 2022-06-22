@@ -4,9 +4,6 @@ import path from "path";
 import * as Console from "console";
 import Prompt from "prompt-sync";
 import process from "process";
-import { URL } from "url";
-
-const __dirname = new URL(".", import.meta.url).pathname;
 
 import { getGitVersion } from "~helpers/git.helper";
 

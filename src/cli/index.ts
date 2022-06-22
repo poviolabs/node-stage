@@ -3,7 +3,7 @@
 import yargs from "yargs";
 import { hideBin } from "yargs/helpers";
 
-import { command as slackCommand } from "./slack.command";
+import { command as slackCommand } from "~cli/slack.command";
 import { getVersion, logError, logInfo } from "~helpers/cli.helper";
 
 yargs(hideBin(process.argv))
