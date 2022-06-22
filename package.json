@@ -1,17 +1,10 @@
 {
   "name": "@poviolabs/node-stage",
-  "version": "1.0.13",
+  "version": "1.0.15",
   "packageManager": "yarn@3.2.0",
-  "main": "dist/index.js",
+  "main": "./dist/index.js",
   "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "default": "./dist/index.js"
-    },
-    "./cli": {
-      "default": "./dist/helpers/cli.helper.js",
-      "types": "./dist/helpers/cli.helper.d.ts"
-    }
+    "./*": "./dest/*"
   },
   "bin": "./dist/sh.js",
   "scripts": {

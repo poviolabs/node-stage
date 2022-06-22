@@ -14,8 +14,6 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
     for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-__exportStar(require("./helpers/yargs.helper"), exports);
-__exportStar(require("./helpers/git.helper"), exports);
 __exportStar(require("./helpers/config.helper"), exports);
 __exportStar(require("./helpers/version.helper"), exports);
 //# sourceMappingURL=index.js.map
