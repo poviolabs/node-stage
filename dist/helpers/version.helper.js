@@ -10,8 +10,8 @@ const cli_helper_1 = require("./cli.helper");
 /**
  * Fetch the version from package.json
  */
-function getVersion() {
-    const packageJsonPath = path_1.default.join(__dirname, "..", "..", "package.json");
+function getVersion(root = path_1.default.join(__dirname, "..", "..")) {
+    const packageJsonPath = path_1.default.join(root, "package.json");
     if (fs_1.default.existsSync(packageJsonPath)) {
         try {
             const packageJson = JSON.parse(fs_1.default.readFileSync(packageJsonPath, "utf8"));

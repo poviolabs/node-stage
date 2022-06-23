@@ -1,6 +1,6 @@
 {
   "name": "@poviolabs/node-stage",
-  "version": "1.0.24",
+  "version": "1.1.0",
   "packageManager": "yarn@3.2.1",
   "main": "./dist/index.js",
   "type": "commonjs",
