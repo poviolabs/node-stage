@@ -59,6 +59,7 @@ export function loadConfig(
     const configName = service ? `${stage}-${service}` : stage;
 
     const yamlConfig = readYaml(yamlPath);
+
     if (!yamlConfig.stages[configName]) {
       throw new Error(`Stage "${configName}" not found in ${configFileName}`);
     }
@@ -83,6 +84,10 @@ export function loadConfig(
         }
       }
     }
+  }
+
+  if (config.env_files) {
+    console.warn("env_files was deprecated, please use envFiles instead");
   }
 
   const environment: Record<string, string | any> = {

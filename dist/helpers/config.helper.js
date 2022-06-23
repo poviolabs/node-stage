@@ -55,6 +55,9 @@ function loadConfig(root, stage, options = {}) {
             }
         }
     }
+    if (config.env_files) {
+        console.warn("env_files was deprecated, please use envFiles instead");
+    }
     const environment = {
         // get environment from yaml
         ...config.environment,
