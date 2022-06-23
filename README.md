@@ -46,7 +46,20 @@ Root from where to fetch `config.yaml` and the base for all relative paths.
 
 #### --stage
 
-The slug of the deployment (ie. prd/stg/dev). Used in config.yaml.
+The slug of the deployment (ie. myapp-prd/mystage-stg/mystage-dev). This is the base of the config set in `conifg.yaml`.
+
+#### --release
+
+Release of the build (ie the git sha) and is unique per code. Autodetected from most CI services or Git.
+
+#### --releaseStrategy
+
+Release is the id that services like Docker and Sentry will use to identify the build.
+Most of the time this is independent of the stage, but in some cases, we have a separate build per stage.
+
+- gitsha - (default) make the same build for all stages
+- gitsha-stage - make a build based on the stage and git sha in cases where the build is different per stage
+
 
 #### --service
 
