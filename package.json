@@ -99,7 +99,8 @@
   },
   "engines": {
     "node": ">= 14",
-    "yarn": ">= 3.2"
+    "yarn": ">= 3.2",
+    "npm": ">= 8"
   },
   "jest": {
     "preset": "ts-jest",
