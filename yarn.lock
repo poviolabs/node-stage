@@ -865,7 +865,6 @@ __metadata:
     prettier: ^2.7.1
     prompt-sync: ^4.2.0
     reflect-metadata: ^0.1.13
-    semver: ^7.3.7
     simple-git: ^3.9.0
     source-map-support: ^0.5.21
     ts-jest: ^28.0.5
@@ -874,6 +873,17 @@ __metadata:
     typescript: 4.7.4
     yaml: ^2.1.1
     yargs: ^17.5.1
+  peerDependencies:
+    chalk: ^4.1.2
+    prompt-sync: ^4.2.0
+    simple-git: ^3.9.0
+  peerDependenciesMeta:
+    chalk:
+      optional: true
+    prompt-sync:
+      optional: true
+    simple-git:
+      optional: true
   bin:
     node-stage: ./dist/sh.js
   languageName: unknown
@@ -4201,13 +4211,13 @@ __metadata:
   linkType: hard
 
 "simple-git@npm:^3.9.0":
-  version: 3.9.0
-  resolution: "simple-git@npm:3.9.0"
+  version: 3.10.0
+  resolution: "simple-git@npm:3.10.0"
   dependencies:
     "@kwsites/file-exists": ^1.1.1
     "@kwsites/promise-deferred": ^1.1.1
     debug: ^4.3.4
-  checksum: 58a2665e03b08f766461379d68a1bec1730582da24721ecf761aeb1d391d7f3fb286fa1bbf3f64056deb4b8e09fff0d7c9e4054e1e509560f0b9896c4a30604b
+  checksum: 167a6c4b2634bfcc4353a87ccbd7f66ecffa9111990341f7208614e70750f7b920c8858202dd8a535e4534f7539e0d94e89704a2d98cff47002f7dc989a4075f
   languageName: node
   linkType: hard
 

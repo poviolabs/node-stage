@@ -26,16 +26,19 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getToolEnvironment = exports.confirm = exports.promptVar = exports.logBanner = exports.logError = exports.logWarning = exports.logSuccess = exports.logNotice = exports.logVerbose = exports.logInfo = exports.logVariable = exports.nonInteractive = exports.chk = void 0;
-const chalk_1 = __importDefault(require("chalk"));
-const Console = __importStar(require("console"));
-const prompt_sync_1 = __importDefault(require("prompt-sync"));
-const process_1 = __importDefault(require("process"));
+exports.getToolEnvironment = exports.confirm = exports.promptVar = exports.logBanner = exports.logError = exports.logWarning = exports.logSuccess = exports.logNotice = exports.logVerbose = exports.logInfo = exports.logVariable = exports.nonInteractive = void 0;
 const git_helper_1 = require("./git.helper");
-exports.chk = new chalk_1.default.Instance({ level: 2 });
-const log = Console.log;
-const prompt = (0, prompt_sync_1.default)({ sigint: true });
-exports.nonInteractive = !!process_1.default.env.CI;
+const chalk_helper_1 = __importDefault(require("./chalk.helper"));
+exports.nonInteractive = !!process.env.CI;
+/**
+ * Wraps prop in a dynamic import
+ * @param args
+ */
+async function prompt(...args) {
+    const { default: Prompt } = await Promise.resolve().then(() => __importStar(require("prompt-sync")));
+    const _prompt = Prompt({ sigint: true });
+    return _prompt(...args);
+}
 /**
  * Print a variable, color it magenta if it's different from the default
  * @param name
@@ -44,48 +47,48 @@ exports.nonInteractive = !!process_1.default.env.CI;
  */
 function logVariable(name, value, defaultValue) {
     if (defaultValue !== undefined && defaultValue !== value) {
-        log(`${exports.chk.yellow(`${name}:`.padEnd(20))}${exports.chk.magenta(value)}`);
+        console.log(`${chalk_helper_1.default.yellow(`${name}:`.padEnd(20))}${chalk_helper_1.default.magenta(value)}`);
     }
     else {
-        log(`${`${name}:`.padEnd(20)}${value}`);
+        console.log(`${`${name}:`.padEnd(20)}${value}`);
     }
 }
 exports.logVariable = logVariable;
 function logInfo(message) {
-    log(`[INFO] ${message}`);
+    console.log(`[INFO] ${message}`);
 }
 exports.logInfo = logInfo;
 function logVerbose(message) {
-    log(`[VERBOSE] ${message}`);
+    console.log(`[VERBOSE] ${message}`);
 }
 exports.logVerbose = logVerbose;
 function logNotice(message) {
-    log(exports.chk.magenta(`[NOTICE] ${message}`));
+    console.log(chalk_helper_1.default.magenta(`[NOTICE] ${message}`));
 }
 exports.logNotice = logNotice;
 function logSuccess(message) {
-    log(exports.chk.green(`[SUCCESS] ${message}`));
+    console.log(chalk_helper_1.default.green(`[SUCCESS] ${message}`));
 }
 exports.logSuccess = logSuccess;
 function logWarning(message) {
-    log(exports.chk.red(`[WARNING] ${message}`));
+    console.log(chalk_helper_1.default.red(`[WARNING] ${message}`));
 }
 exports.logWarning = logWarning;
 function logError(message) {
-    log(exports.chk.red(`[ERROR] ${message}`));
+    console.log(chalk_helper_1.default.red(`[ERROR] ${message}`));
 }
 exports.logError = logError;
 function logBanner(message) {
-    log(exports.chk.bgYellow(`==== ${message} ====`));
+    console.log(chalk_helper_1.default.bgYellow(`==== ${message} ====`));
 }
 exports.logBanner = logBanner;
 /**
- * Set a env variable
+ * Request a ENV variable from the user if not set
  * @param name
  * @param value
  * @param suggested - the value the scripts expects and suggest
  */
-function promptVar(name, value, suggested) {
+async function promptVar(name, value, suggested) {
     if (value !== undefined) {
         logVariable(name, value, suggested);
         return value;
@@ -101,7 +104,7 @@ function promptVar(name, value, suggested) {
         }
     }
     else {
-        const response = prompt(`Please provide ${exports.chk.yellow(name)} (${suggested}):`, suggested);
+        const response = await prompt(`Please provide ${chalk_helper_1.default.yellow(name)} (${suggested}):`, suggested, {});
         // todo remove previous line to prevent duplicates
         logVariable(name, response, suggested);
         return response;
@@ -109,12 +112,12 @@ function promptVar(name, value, suggested) {
 }
 exports.promptVar = promptVar;
 async function confirm(message) {
-    return (await prompt(message, "yes")) === "yes";
+    return (await prompt(message, "yes", {})) === "yes";
 }
 exports.confirm = confirm;
 async function getToolEnvironment(argv) {
     const env = {
-        nodeVersion: process_1.default.version,
+        nodeVersion: process.version,
     };
     const gitCliVersion = await (0, git_helper_1.getGitVersion)(argv.pwd);
     if (gitCliVersion) {

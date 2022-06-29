@@ -1,5 +1,5 @@
 import "reflect-metadata";
-import { Options } from "yargs";
+import type { Options } from "yargs";
 import { Config } from "./config.helper";
 import { ReleaseStrategy } from "./git.helper";
 interface IOptionProperties extends Options {

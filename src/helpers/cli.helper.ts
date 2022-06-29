@@ -1,15 +1,19 @@
-import chalk from "chalk";
-import * as Console from "console";
-import Prompt from "prompt-sync";
-import process from "process";
+import type { Prompt as PromptSyncPrompt } from "prompt-sync";
 
 import { getGitVersion } from "./git.helper";
-
-export const chk = new chalk.Instance({ level: 2 });
-const log = Console.log;
-const prompt = Prompt({ sigint: true });
+import chk from "./chalk.helper";
 
 export const nonInteractive = !!process.env.CI;
+
+/**
+ * Wraps prop in a dynamic import
+ * @param args
+ */
+async function prompt(...args: Parameters<PromptSyncPrompt>) {
+  const { default: Prompt } = await import("prompt-sync");
+  const _prompt = Prompt({ sigint: true });
+  return _prompt(...args);
+}
 
 /**
  * Print a variable, color it magenta if it's different from the default
@@ -23,47 +27,51 @@ export function logVariable(
   defaultValue?: string | number
 ) {
   if (defaultValue !== undefined && defaultValue !== value) {
-    log(`${chk.yellow(`${name}:`.padEnd(20))}${chk.magenta(value)}`);
+    console.log(`${chk.yellow(`${name}:`.padEnd(20))}${chk.magenta(value)}`);
   } else {
-    log(`${`${name}:`.padEnd(20)}${value}`);
+    console.log(`${`${name}:`.padEnd(20)}${value}`);
   }
 }
 
 export function logInfo(message: string) {
-  log(`[INFO] ${message}`);
+  console.log(`[INFO] ${message}`);
 }
 
 export function logVerbose(message: string) {
-  log(`[VERBOSE] ${message}`);
+  console.log(`[VERBOSE] ${message}`);
 }
 
 export function logNotice(message: string) {
-  log(chk.magenta(`[NOTICE] ${message}`));
+  console.log(chk.magenta(`[NOTICE] ${message}`));
 }
 
 export function logSuccess(message: string) {
-  log(chk.green(`[SUCCESS] ${message}`));
+  console.log(chk.green(`[SUCCESS] ${message}`));
 }
 
 export function logWarning(message: string) {
-  log(chk.red(`[WARNING] ${message}`));
+  console.log(chk.red(`[WARNING] ${message}`));
 }
 
 export function logError(message: string) {
-  log(chk.red(`[ERROR] ${message}`));
+  console.log(chk.red(`[ERROR] ${message}`));
 }
 
 export function logBanner(message: string) {
-  log(chk.bgYellow(`==== ${message} ====`));
+  console.log(chk.bgYellow(`==== ${message} ====`));
 }
 
 /**
- * Set a env variable
+ * Request a ENV variable from the user if not set
  * @param name
  * @param value
  * @param suggested - the value the scripts expects and suggest
  */
-export function promptVar(name: string, value: string, suggested?: string) {
+export async function promptVar(
+  name: string,
+  value: string,
+  suggested?: string
+) {
   if (value !== undefined) {
     logVariable(name, value, suggested);
     return value;
@@ -77,9 +85,10 @@ export function promptVar(name: string, value: string, suggested?: string) {
       throw new Error(`Missing Environment: ${name}`);
     }
   } else {
-    const response = prompt(
+    const response = await prompt(
       `Please provide ${chk.yellow(name)} (${suggested}):`,
-      suggested as string
+      suggested as string,
+      {}
     );
     // todo remove previous line to prevent duplicates
     logVariable(name, response, suggested);
@@ -88,7 +97,7 @@ export function promptVar(name: string, value: string, suggested?: string) {
 }
 
 export async function confirm(message: string): Promise<boolean> {
-  return (await prompt(message, "yes")) === "yes";
+  return (await prompt(message, "yes", {})) === "yes";
 }
 
 export async function getToolEnvironment(argv: {

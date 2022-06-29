@@ -1,6 +1,5 @@
 import path from "path";
 import fs from "fs";
-import { logError } from "./cli.helper";
 
 /**
  * Fetch the version from package.json
@@ -14,7 +13,7 @@ export function getVersion(
       const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, "utf8"));
       return packageJson.version as string;
     } catch (e) {
-      logError((e as Error).toString());
+      console.error(`[ERROR] ${(e as Error).toString()}`);
     }
   }
   return undefined;

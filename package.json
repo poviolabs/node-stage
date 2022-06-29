@@ -1,6 +1,6 @@
 {
   "name": "@poviolabs/node-stage",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "packageManager": "yarn@3.2.1",
   "main": "./dist/index.js",
   "type": "commonjs",
@@ -12,6 +12,10 @@
     "./cli": {
       "default": "./dist/helpers/cli.helper.js",
       "types": "./dist/helpers/cli.helper.d.ts"
+    },
+    "./chalk": {
+      "default": "./dist/helpers/chalk.helper.js",
+      "types": "./dist/helpers/chalk.helper.d.ts"
     },
     "./git": {
       "default": "./dist/helpers/git.helper.js",
@@ -61,13 +65,25 @@
   "contributors": [
     "Marko Zabreznik <marko.zabreznik@povio.com>"
   ],
-  "dependencies": {
+  "peerDependenciesMeta": {
+    "chalk": {
+      "optional": true
+    },
+    "prompt-sync": {
+      "optional": true
+    },
+    "simple-git": {
+      "optional": true
+    }
+  },
+  "peerDependencies": {
     "chalk": "^4.1.2",
-    "dotenv": "^16.0.1",
     "prompt-sync": "^4.2.0",
+    "simple-git": "^3.9.0"
+  },
+  "dependencies": {
+    "dotenv": "^16.0.1",
     "reflect-metadata": "^0.1.13",
-    "semver": "^7.3.7",
-    "simple-git": "^3.9.0",
     "yaml": "^2.1.1",
     "yargs": "^17.5.1"
   },
@@ -85,12 +101,15 @@
     "@types/yargs": "^17.0.10",
     "@typescript-eslint/eslint-plugin": "^5.29.0",
     "@typescript-eslint/parser": "^5.29.0",
+    "chalk": "^4.1.2",
     "eslint": "^8.18.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-import-helpers": "^1.2.1",
     "eslint-plugin-prettier": "^4.0.0",
     "jest": "^28.1.1",
     "prettier": "^2.7.1",
+    "prompt-sync": "^4.2.0",
+    "simple-git": "^3.9.0",
     "source-map-support": "^0.5.21",
     "ts-jest": "^28.0.5",
     "ts-node": "^10.8.1",

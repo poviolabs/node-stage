@@ -56,8 +56,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["prettier", "npm:2.7.1"],\
             ["prompt-sync", "npm:4.2.0"],\
             ["reflect-metadata", "npm:0.1.13"],\
-            ["semver", "npm:7.3.7"],\
-            ["simple-git", "npm:3.9.0"],\
+            ["simple-git", "npm:3.10.0"],\
             ["source-map-support", "npm:0.5.21"],\
             ["ts-jest", "virtual:76fed1a7325cbaaf4cf6f19a79c4f33b3c946d76f18563838ddff0aaa5d18c99719cf1ddffd175091a75ea2b276ad4907615a658d0bb6409160f9bee8e7023d2#npm:28.0.5"],\
             ["ts-node", "virtual:76fed1a7325cbaaf4cf6f19a79c4f33b3c946d76f18563838ddff0aaa5d18c99719cf1ddffd175091a75ea2b276ad4907615a658d0bb6409160f9bee8e7023d2#npm:10.8.1"],\
@@ -1349,8 +1348,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["prettier", "npm:2.7.1"],\
             ["prompt-sync", "npm:4.2.0"],\
             ["reflect-metadata", "npm:0.1.13"],\
-            ["semver", "npm:7.3.7"],\
-            ["simple-git", "npm:3.9.0"],\
+            ["simple-git", "npm:3.10.0"],\
             ["source-map-support", "npm:0.5.21"],\
             ["ts-jest", "virtual:76fed1a7325cbaaf4cf6f19a79c4f33b3c946d76f18563838ddff0aaa5d18c99719cf1ddffd175091a75ea2b276ad4907615a658d0bb6409160f9bee8e7023d2#npm:28.0.5"],\
             ["ts-node", "virtual:76fed1a7325cbaaf4cf6f19a79c4f33b3c946d76f18563838ddff0aaa5d18c99719cf1ddffd175091a75ea2b276ad4907615a658d0bb6409160f9bee8e7023d2#npm:10.8.1"],\
@@ -5367,10 +5365,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["simple-git", [\
-        ["npm:3.9.0", {\
-          "packageLocation": "./.yarn/cache/simple-git-npm-3.9.0-ea0fb9afa1-58a2665e03.zip/node_modules/simple-git/",\
+        ["npm:3.10.0", {\
+          "packageLocation": "./.yarn/cache/simple-git-npm-3.10.0-3041714c34-167a6c4b26.zip/node_modules/simple-git/",\
           "packageDependencies": [\
-            ["simple-git", "npm:3.9.0"],\
+            ["simple-git", "npm:3.10.0"],\
             ["@kwsites/file-exists", "npm:1.1.1"],\
             ["@kwsites/promise-deferred", "npm:1.1.1"],\
             ["debug", "virtual:1f3c51be25fef20e854261431be23d317093b3b463e81e911f4f45a636ff582620db066c9d2a5922a428e07e10fe4788eee8196c796ce2c9bd49d22743fec207#npm:4.3.4"]\

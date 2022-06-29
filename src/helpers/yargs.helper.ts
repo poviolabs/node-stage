@@ -1,5 +1,5 @@
 import "reflect-metadata";
-import { Options } from "yargs";
+import type { Options } from "yargs";
 import path from "path";
 
 import { loadConfig, Config } from "./config.helper";

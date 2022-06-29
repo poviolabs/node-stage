@@ -1,5 +1,3 @@
-import chalk from "chalk";
-export declare const chk: chalk.Chalk;
 export declare const nonInteractive: boolean;
 /**
  * Print a variable, color it magenta if it's different from the default
@@ -16,12 +14,12 @@ export declare function logWarning(message: string): void;
 export declare function logError(message: string): void;
 export declare function logBanner(message: string): void;
 /**
- * Set a env variable
+ * Request a ENV variable from the user if not set
  * @param name
  * @param value
  * @param suggested - the value the scripts expects and suggest
  */
-export declare function promptVar(name: string, value: string, suggested?: string): string;
+export declare function promptVar(name: string, value: string, suggested?: string): Promise<string>;
 export declare function confirm(message: string): Promise<boolean>;
 export declare function getToolEnvironment(argv: {
     pwd: string;

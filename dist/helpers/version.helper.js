@@ -6,7 +6,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.getVersion = void 0;
 const path_1 = __importDefault(require("path"));
 const fs_1 = __importDefault(require("fs"));
-const cli_helper_1 = require("./cli.helper");
 /**
  * Fetch the version from package.json
  */
@@ -18,7 +17,7 @@ function getVersion(root = path_1.default.join(__dirname, "..", "..")) {
             return packageJson.version;
         }
         catch (e) {
-            (0, cli_helper_1.logError)(e.toString());
+            console.error(`[ERROR] ${e.toString()}`);
         }
     }
     return undefined;
