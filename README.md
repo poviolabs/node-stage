@@ -5,10 +5,10 @@ Library to manage environment variables and stages.
 # Setup
 
 ```bash
-yarn add node-stage@poviolabs/node-stage#v1
+yarn add node-stage@poviolabs/node-stage#v2
 
 # update
-yarn up node-stage@poviolabs/node-stage#v1
+yarn up node-stage@poviolabs/node-stage#v2
 ```
 
 # Config.yaml Example
