@@ -1,6 +1,6 @@
 {
   "name": "@poviolabs/node-stage",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "packageManager": "yarn@3.2.1",
   "type": "commonjs",
   "main": "./dist/index.js",
@@ -14,7 +14,7 @@
     "./chalk": "./dist/helpers/chalk.helper.js",
     "./git": "./dist/helpers/git.helper.js",
     "./yargs": "./dist/helpers/yargs.helper.js",
-    "./version": "./dist/helpers/cli.helper.js",
+    "./version": "./dist/helpers/version.helper.js",
     "./config": "./dist/helpers/config.helper.js"
   },
   "typesVersions": {
