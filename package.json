@@ -20,12 +20,12 @@
   "typesVersions": {
     "*": {
       "*": ["dist/index.d.ts"],
-      "cli": ["dist/helpers/cli.d.ts"],
-      "chalk": ["dist/helpers/chalk.d.ts"],
-      "git": ["dist/helpers/git.d.ts"],
-      "yargs": ["dist/helpers/yargs.d.ts"],
-      "version": ["dist/helpers/version.d.ts"],
-      "config": ["dist/helpers/config.d.ts"]
+      "cli": ["dist/helpers/cli.helper.d.ts"],
+      "chalk": ["dist/helpers/chalk.helper.d.ts"],
+      "git": ["dist/helpers/git.helper.d.ts"],
+      "yargs": ["dist/helpers/yargs.helper.d.ts"],
+      "version": ["dist/helpers/version.helper.d.ts"],
+      "config": ["dist/helpers/config.helper.d.ts"]
     }
   },
   "bin": "./dist/sh.js",
