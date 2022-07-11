@@ -1,43 +1,36 @@
 {
   "name": "@poviolabs/node-stage",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "packageManager": "yarn@3.2.1",
-  "main": "./dist/index.js",
   "type": "commonjs",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "default": "./dist/index.js"
-    },
-    "./cli": {
-      "default": "./dist/helpers/cli.helper.js",
-      "types": "./dist/helpers/cli.helper.d.ts"
-    },
-    "./chalk": {
-      "default": "./dist/helpers/chalk.helper.js",
-      "types": "./dist/helpers/chalk.helper.d.ts"
-    },
-    "./git": {
-      "default": "./dist/helpers/git.helper.js",
-      "types": "./dist/helpers/git.helper.d.ts"
-    },
-    "./yargs": {
-      "default": "./dist/helpers/yargs.helper.js",
-      "types": "./dist/helpers/yargs.helper.d.ts"
-    },
-    "./version": {
-      "default": "./dist/helpers/version.helper.js",
-      "types": "./dist/helpers/version.helper.d.ts"
-    },
-    "./config": {
-      "default": "./dist/helpers/config.helper.js",
-      "types": "./dist/helpers/config.helper.d.ts"
+    ".": "./dist/index.js",
+    "./cli": "./dist/helpers/cli.js",
+    "./chalk": "./dist/helpers/chalk.js",
+    "./git": "./dist/helpers/git.js",
+    "./yargs": "./dist/helpers/yargs.js",
+    "./version": "./dist/helpers/cli.js",
+    "./config": "./dist/helpers/config.js"
+  },
+  "typesVersions": {
+    "*": {
+      "*": ["dist/index.d.ts"],
+      "cli": ["dist/helpers/cli.d.ts"],
+      "chalk": ["dist/helpers/chalk.d.ts"],
+      "git": ["dist/helpers/git.d.ts"],
+      "yargs": ["dist/helpers/yargs.d.ts"],
+      "version": ["dist/helpers/version.d.ts"],
+      "config": ["dist/helpers/config.d.ts"]
     }
   },
-  "types": "./dist/index.d.ts",
   "bin": "./dist/sh.js",
   "scripts": {
-    "build": "yarn clean && yarn version patch && yarn run build:cjs",
+    "build": "yarn clean && npm version patch --no-git-tag-version && yarn run build:cjs",
     "build:cjs": "node tools/cleanup cjs && tsc -p ./tsconfig.json && chmod +x ./dist/sh.js",
     "clean": "node tools/cleanup",
     "test": "jest --no-cache --runInBand",
@@ -46,9 +39,6 @@
     "test:ts-node:cli": "ts-node -r tsconfig-paths/register ./src/sh.ts --pwd ./test --stage test",
     "lint": "eslint ."
   },
-  "files": [
-    "dist"
-  ],
   "keywords": [
     "povio",
     "node",
@@ -74,18 +64,21 @@
     },
     "simple-git": {
       "optional": true
+    },
+    "yargs": {
+      "optional": true
     }
   },
   "peerDependencies": {
     "chalk": "^4.1.2",
     "prompt-sync": "^4.2.0",
-    "simple-git": "^3.9.0"
+    "simple-git": "^3.9.0",
+    "yargs": "^17.5.1"
   },
   "dependencies": {
     "dotenv": "^16.0.1",
     "reflect-metadata": "^0.1.13",
-    "yaml": "^2.1.1",
-    "yargs": "^17.5.1"
+    "yaml": "^2.1.1"
   },
   "devDependencies": {
     "@jest/types": "^28.1.1",
@@ -114,7 +107,8 @@
     "ts-jest": "^28.0.5",
     "ts-node": "^10.8.1",
     "tsconfig-paths": "^4.0.0",
-    "typescript": "4.7.4"
+    "typescript": "4.7.4",
+    "yargs": "^17.5.1"
   },
   "engines": {
     "node": ">= 14",

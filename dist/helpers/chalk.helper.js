@@ -52,5 +52,4 @@ exports.chk = new Proxy({}, {
         };
     },
 });
-exports.default = exports.chk;
 //# sourceMappingURL=chalk.helper.js.map

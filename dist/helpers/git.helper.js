@@ -23,7 +23,8 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getRelease = exports.ReleaseStrategy = exports.getShortSha = exports.getSha = exports.getCommitMessage = exports.getGitChanges = exports.getGitVersion = void 0;
+exports.getRelease = exports.getShortSha = exports.getSha = exports.getCommitMessage = exports.getGitChanges = exports.getGitVersion = void 0;
+const config_types_1 = require("./config.types");
 async function simpleGit(p) {
     const { default: _simpleGit } = await Promise.resolve().then(() => __importStar(require("simple-git")));
     return _simpleGit(p);
@@ -64,12 +65,7 @@ async function getShortSha(pwd) {
     return (await git.raw("rev-parse", "--short", "HEAD")).trim();
 }
 exports.getShortSha = getShortSha;
-var ReleaseStrategy;
-(function (ReleaseStrategy) {
-    ReleaseStrategy["gitsha-stage"] = "gitsha-stage";
-    ReleaseStrategy["gitsha"] = "gitsha";
-})(ReleaseStrategy = exports.ReleaseStrategy || (exports.ReleaseStrategy = {}));
-async function getRelease(pwd, strategy = ReleaseStrategy.gitsha, addon) {
+async function getRelease(pwd, strategy = config_types_1.ReleaseStrategy.gitsha, addon) {
     try {
         const git = await simpleGit(pwd);
         const gitSha = await git.revparse("HEAD");
@@ -79,7 +75,6 @@ async function getRelease(pwd, strategy = ReleaseStrategy.gitsha, addon) {
         return gitSha;
     }
     catch (e) {
-        console.log(e);
         return undefined;
     }
 }

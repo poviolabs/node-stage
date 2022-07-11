@@ -1,3 +1,5 @@
+import { ReleaseStrategy } from "./config.types";
+
 async function simpleGit(p: string) {
   const { default: _simpleGit } = await import("simple-git");
   return _simpleGit(p);
@@ -37,11 +39,6 @@ export async function getShortSha(pwd: string) {
   return (await git.raw("rev-parse", "--short", "HEAD")).trim();
 }
 
-export enum ReleaseStrategy {
-  "gitsha-stage" = "gitsha-stage",
-  "gitsha" = "gitsha",
-}
-
 export async function getRelease(
   pwd: string,
   strategy: ReleaseStrategy = ReleaseStrategy.gitsha,
@@ -55,7 +52,6 @@ export async function getRelease(
     }
     return gitSha;
   } catch (e) {
-    console.log(e);
     return undefined;
   }
 }

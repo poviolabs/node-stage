@@ -1,7 +1,7 @@
 import type { Prompt as PromptSyncPrompt } from "prompt-sync";
 
 import { getGitVersion } from "./git.helper";
-import chk from "./chalk.helper";
+import { chk } from "./chalk.helper";
 
 export const nonInteractive = !!process.env.CI;
 

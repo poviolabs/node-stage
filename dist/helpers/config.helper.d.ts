@@ -1,3 +1,4 @@
+export * from "./config.types";
 interface ConfigItem {
     [key: string]: ConfigItem | string | number | string[] | any;
 }
@@ -46,4 +47,3 @@ export declare function readYaml(path: string): Record<string, any>;
  */
 export declare function readEnv(root: string, name: string): Record<string, string>;
 export declare function getVariable(config: Config, p: string): string;
-export {};

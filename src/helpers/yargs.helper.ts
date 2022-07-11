@@ -2,8 +2,9 @@ import "reflect-metadata";
 import type { Options } from "yargs";
 import path from "path";
 
+import type { ReleaseStrategy } from "./config.types";
 import { loadConfig, Config } from "./config.helper";
-import { getRelease, ReleaseStrategy } from "./git.helper";
+import { getRelease } from "./git.helper";
 
 interface IOptionProperties extends Options {
   envAlias?: string;
@@ -137,7 +138,11 @@ export async function loadYargsConfig<T extends YargsOptions>(
     }
   }
 
-  argv.release = await getRelease(argv.pwd, argv.releaseStrategy);
+  argv.release =
+    config.release ||
+    process.env.RELEASE ||
+    (await getRelease(argv.pwd, argv.releaseStrategy));
+
   argv.config = config;
 
   return argv;

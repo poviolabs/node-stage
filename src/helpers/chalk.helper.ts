@@ -28,5 +28,3 @@ export const chk: Chalk = new Proxy({} as Chalk, {
     };
   },
 });
-
-export default chk;

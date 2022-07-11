@@ -1,7 +1,7 @@
 import "reflect-metadata";
 import type { Options } from "yargs";
+import type { ReleaseStrategy } from "./config.types";
 import { Config } from "./config.helper";
-import { ReleaseStrategy } from "./git.helper";
 interface IOptionProperties extends Options {
     envAlias?: string;
     envAliases?: string[];

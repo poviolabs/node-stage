@@ -22,13 +22,10 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getToolEnvironment = exports.confirm = exports.promptVar = exports.logBanner = exports.logError = exports.logWarning = exports.logSuccess = exports.logNotice = exports.logVerbose = exports.logInfo = exports.logVariable = exports.nonInteractive = void 0;
 const git_helper_1 = require("./git.helper");
-const chalk_helper_1 = __importDefault(require("./chalk.helper"));
+const chalk_helper_1 = require("./chalk.helper");
 exports.nonInteractive = !!process.env.CI;
 /**
  * Wraps prop in a dynamic import
@@ -47,7 +44,7 @@ async function prompt(...args) {
  */
 function logVariable(name, value, defaultValue) {
     if (defaultValue !== undefined && defaultValue !== value) {
-        console.log(`${chalk_helper_1.default.yellow(`${name}:`.padEnd(20))}${chalk_helper_1.default.magenta(value)}`);
+        console.log(`${chalk_helper_1.chk.yellow(`${name}:`.padEnd(20))}${chalk_helper_1.chk.magenta(value)}`);
     }
     else {
         console.log(`${`${name}:`.padEnd(20)}${value}`);
@@ -63,23 +60,23 @@ function logVerbose(message) {
 }
 exports.logVerbose = logVerbose;
 function logNotice(message) {
-    console.log(chalk_helper_1.default.magenta(`[NOTICE] ${message}`));
+    console.log(chalk_helper_1.chk.magenta(`[NOTICE] ${message}`));
 }
 exports.logNotice = logNotice;
 function logSuccess(message) {
-    console.log(chalk_helper_1.default.green(`[SUCCESS] ${message}`));
+    console.log(chalk_helper_1.chk.green(`[SUCCESS] ${message}`));
 }
 exports.logSuccess = logSuccess;
 function logWarning(message) {
-    console.log(chalk_helper_1.default.red(`[WARNING] ${message}`));
+    console.log(chalk_helper_1.chk.red(`[WARNING] ${message}`));
 }
 exports.logWarning = logWarning;
 function logError(message) {
-    console.log(chalk_helper_1.default.red(`[ERROR] ${message}`));
+    console.log(chalk_helper_1.chk.red(`[ERROR] ${message}`));
 }
 exports.logError = logError;
 function logBanner(message) {
-    console.log(chalk_helper_1.default.bgYellow(`==== ${message} ====`));
+    console.log(chalk_helper_1.chk.bgYellow(`==== ${message} ====`));
 }
 exports.logBanner = logBanner;
 /**
@@ -104,7 +101,7 @@ async function promptVar(name, value, suggested) {
         }
     }
     else {
-        const response = await prompt(`Please provide ${chalk_helper_1.default.yellow(name)} (${suggested}):`, suggested, {});
+        const response = await prompt(`Please provide ${chalk_helper_1.chk.yellow(name)} (${suggested}):`, suggested, {});
         // todo remove previous line to prevent duplicates
         logVariable(name, response, suggested);
         return response;
