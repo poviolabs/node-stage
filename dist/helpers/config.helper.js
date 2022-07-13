@@ -39,6 +39,9 @@ function loadConfig(root, _stage, options = {}) {
     if (!root || !stage) {
         throw new Error("Stage not defined");
     }
+    const version = options?.version ||
+        process.env[`${globalPrefix}__version`] ||
+        process.env.VERSION;
     const service = options.service ||
         process.env[`${globalPrefix}__service`] ||
         process.env.SERVICE;
@@ -61,6 +64,9 @@ function loadConfig(root, _stage, options = {}) {
             // read tree from .yaml stage
             ...yamlConfig.stages[configName],
         };
+        if (version) {
+            config.version = version;
+        }
         if (service) {
             config.service = service;
         }

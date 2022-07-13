@@ -38,7 +38,7 @@ __decorate([
 __decorate([
     (0, yargs_helper_1.Option)({
         demandOption: false,
-        choices: ["json", "var"]
+        choices: ["json", "var"],
     }),
     __metadata("design:type", String)
 ], EnvOptions.prototype, "returnType", void 0);

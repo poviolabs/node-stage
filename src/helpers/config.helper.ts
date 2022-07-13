@@ -33,6 +33,7 @@ export function loadConfig(
   root: string,
   _stage?: string,
   options: {
+    version?: string;
     service?: string;
     configFileName?: string;
     globalPrefix?: string;
@@ -50,6 +51,11 @@ export function loadConfig(
   if (!root || !stage) {
     throw new Error("Stage not defined");
   }
+
+  const version =
+    options?.version ||
+    process.env[`${globalPrefix}__version`] ||
+    process.env.VERSION;
 
   const service =
     options.service ||
@@ -79,6 +85,10 @@ export function loadConfig(
       // read tree from .yaml stage
       ...yamlConfig.stages[configName],
     };
+
+    if (version) {
+      config.version = version;
+    }
 
     if (service) {
       config.service = service;

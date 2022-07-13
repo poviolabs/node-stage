@@ -22,6 +22,7 @@ export interface Config extends ConfigItem {
  *
  */
 export declare function loadConfig(root: string, _stage?: string, options?: {
+    version?: string;
     service?: string;
     configFileName?: string;
     globalPrefix?: string;
