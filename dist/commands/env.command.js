@@ -38,6 +38,7 @@ __decorate([
 __decorate([
     (0, yargs_helper_1.Option)({
         demandOption: false,
+        choices: ["json", "var"]
     }),
     __metadata("design:type", String)
 ], EnvOptions.prototype, "returnType", void 0);
@@ -62,7 +63,13 @@ exports.command = {
             return;
         }
         else if (argv.returnType === "var") {
-            process.stdout.write((0, config_helper_1.getVariable)(argv.config, argv.varPath));
+            process.stdout.write((0, config_helper_1.getVariable)(argv.config, argv.varPath).toString());
+        }
+        else if (argv.returnType === "json") {
+            process.stdout.write(JSON.stringify((0, config_helper_1.getVariable)(argv.config, argv.varPath)));
+        }
+        else {
+            console.log(`returnType "${argv.returnType}" not supported`);
         }
     },
 };

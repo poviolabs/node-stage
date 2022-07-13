@@ -31,7 +31,7 @@ export interface Config extends ConfigItem {
  */
 export function loadConfig(
   root: string,
-  stage: string,
+  _stage?: string,
   options: {
     service?: string;
     configFileName?: string;
@@ -44,11 +44,17 @@ export function loadConfig(
   const configFileName =
     options.configFileName || process.env.CONFIG_FILE || "config.yaml";
 
+  const stage =
+    _stage || process.env[`${globalPrefix}__stage`] || process.env.STAGE;
+
   if (!root || !stage) {
     throw new Error("Stage not defined");
   }
 
-  const service = options.service || undefined;
+  const service =
+    options.service ||
+    process.env[`${globalPrefix}__service`] ||
+    process.env.SERVICE;
 
   let config: Config;
   {

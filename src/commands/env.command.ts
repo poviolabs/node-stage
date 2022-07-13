@@ -31,6 +31,7 @@ class EnvOptions implements YargsOptions {
 
   @Option({
     demandOption: false,
+    choices: ["json", "var"],
   })
   returnType!: string;
 
@@ -65,7 +66,13 @@ export const command: yargs.CommandModule = {
       );
       return;
     } else if (argv.returnType === "var") {
-      process.stdout.write(getVariable(argv.config, argv.varPath));
+      process.stdout.write(getVariable(argv.config, argv.varPath).toString());
+    } else if (argv.returnType === "json") {
+      process.stdout.write(
+        JSON.stringify(getVariable(argv.config, argv.varPath))
+      );
+    } else {
+      console.log(`returnType "${argv.returnType}" not supported`);
     }
   },
 };

@@ -21,7 +21,7 @@ export interface Config extends ConfigItem {
  *   - override config.yaml with process.env.CONFIG_FILE
  *
  */
-export declare function loadConfig(root: string, stage: string, options?: {
+export declare function loadConfig(root: string, _stage?: string, options?: {
     service?: string;
     configFileName?: string;
     globalPrefix?: string;

@@ -32,13 +32,16 @@ __exportStar(require("./config.types"), exports);
  *   - override config.yaml with process.env.CONFIG_FILE
  *
  */
-function loadConfig(root, stage, options = {}) {
+function loadConfig(root, _stage, options = {}) {
     const globalPrefix = options.globalPrefix || process.env.CONFIG_PREFIX || "app";
     const configFileName = options.configFileName || process.env.CONFIG_FILE || "config.yaml";
+    const stage = _stage || process.env[`${globalPrefix}__stage`] || process.env.STAGE;
     if (!root || !stage) {
         throw new Error("Stage not defined");
     }
-    const service = options.service || undefined;
+    const service = options.service ||
+        process.env[`${globalPrefix}__service`] ||
+        process.env.SERVICE;
     let config;
     {
         const yamlPath = path_1.default.join(root, configFileName);
