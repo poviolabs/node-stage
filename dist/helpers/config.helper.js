@@ -35,9 +35,9 @@ __exportStar(require("./config.types"), exports);
 function loadConfig(root, _stage, options = {}) {
     const globalPrefix = options.globalPrefix || process.env.CONFIG_PREFIX || "app";
     const configFileName = options.configFileName || process.env.CONFIG_FILE || "config.yaml";
-    const stage = _stage || process.env[`${globalPrefix}__stage`] || process.env.STAGE;
-    if (!root || !stage) {
-        throw new Error("Stage not defined");
+    let stage = _stage || process.env[`${globalPrefix}__stage`] || process.env.STAGE;
+    if (!root) {
+        throw new Error("Root path not defined");
     }
     const version = options?.version ||
         process.env[`${globalPrefix}__version`] ||
@@ -52,8 +52,25 @@ function loadConfig(root, _stage, options = {}) {
             // the config file is required
             throw new Error(`Couldn't find configuration file "${yamlPath}"`);
         }
-        const configName = service ? `${stage}-${service}` : stage;
         const yamlConfig = readYaml(yamlPath);
+        let localYamlConfig;
+        if (configFileName === "config.yaml") {
+            if (fs_1.default.existsSync(path_1.default.join(root, "config.local.yaml"))) {
+                localYamlConfig = readYaml(path_1.default.join(root, "config.local.yaml"));
+            }
+        }
+        if (!stage) {
+            if (localYamlConfig?.defaultStage) {
+                stage = localYamlConfig.defaultStage;
+            }
+            else if (yamlConfig.defaultStage) {
+                stage = yamlConfig.defaultStage;
+            }
+        }
+        if (!stage) {
+            throw new Error("Stage not defined");
+        }
+        const configName = service ? `${stage}-${service}` : stage;
         if (!yamlConfig.stages[configName]) {
             throw new Error(`Stage "${configName}" not found in ${configFileName}`);
         }
@@ -70,12 +87,9 @@ function loadConfig(root, _stage, options = {}) {
         if (service) {
             config.service = service;
         }
-        if (configFileName === "config.yaml") {
-            if (fs_1.default.existsSync(path_1.default.join(root, "config.local.yaml"))) {
-                const localYamlConfig = readYaml(path_1.default.join(root, "config.local.yaml"));
-                if (localYamlConfig.stages[configName]) {
-                    mergeDeep(config, localYamlConfig.stages[configName]);
-                }
+        if (localYamlConfig) {
+            if (localYamlConfig.stages[configName]) {
+                mergeDeep(config, localYamlConfig.stages[configName]);
             }
         }
     }

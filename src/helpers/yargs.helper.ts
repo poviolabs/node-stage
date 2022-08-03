@@ -91,20 +91,17 @@ export async function loadYargsConfig<T extends YargsOptions>(
   );
   if (!argv.pwd) throw new Error("No PWD given");
 
-  const stage =
-    (_argv.stage as string) ||
-    process.env[`${process.env.CONFIG_PREFIX}__stage`] ||
-    process.env.STAGE;
-  if (!stage) throw new Error("No Stage defined");
-  argv.stage = stage;
-
   let config;
   if (_argv.service) {
     argv.service = _argv.service as string;
-    config = loadConfig(argv.pwd, argv.stage, { service: argv.service });
+    config = loadConfig(argv.pwd, _argv.stage as string, {
+      service: argv.service,
+    });
   } else {
-    config = loadConfig(argv.pwd, argv.stage);
+    config = loadConfig(argv.pwd, _argv.stage as string);
   }
+
+  argv.stage = config.stage;
 
   for (const [name, o] of Object.entries(getYargsOption(cls))) {
     if (["pwd", "stage", "config"].includes(name)) {

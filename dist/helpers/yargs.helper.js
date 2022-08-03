@@ -49,20 +49,17 @@ async function loadYargsConfig(cls, _argv, configDefaultBase) {
     argv.pwd = path_1.default.resolve(_argv.pwd || process.env.PWD || process.cwd());
     if (!argv.pwd)
         throw new Error("No PWD given");
-    const stage = _argv.stage ||
-        process.env[`${process.env.CONFIG_PREFIX}__stage`] ||
-        process.env.STAGE;
-    if (!stage)
-        throw new Error("No Stage defined");
-    argv.stage = stage;
     let config;
     if (_argv.service) {
         argv.service = _argv.service;
-        config = (0, config_helper_1.loadConfig)(argv.pwd, argv.stage, { service: argv.service });
+        config = (0, config_helper_1.loadConfig)(argv.pwd, _argv.stage, {
+            service: argv.service,
+        });
     }
     else {
-        config = (0, config_helper_1.loadConfig)(argv.pwd, argv.stage);
+        config = (0, config_helper_1.loadConfig)(argv.pwd, _argv.stage);
     }
+    argv.stage = config.stage;
     for (const [name, o] of Object.entries(getYargsOption(cls))) {
         if (["pwd", "stage", "config"].includes(name)) {
             continue;
