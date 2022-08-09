@@ -137,7 +137,11 @@ export async function loadYargsConfig<T extends YargsOptions>(
     }
   }
 
-  argv.release = await getRelease(argv.pwd, argv.releaseStrategy);
+  argv.release = argv.release =
+    config.release ||
+    process.env.RELEASE ||
+    (await getRelease(argv.pwd, argv.releaseStrategy));
+
   argv.config = config;
 
   return argv;

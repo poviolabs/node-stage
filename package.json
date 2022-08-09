@@ -1,6 +1,6 @@
 {
   "name": "@poviolabs/node-stage",
-  "version": "1.1.0",
+  "version": "1.1.2",
   "packageManager": "yarn@3.2.1",
   "main": "./dist/index.js",
   "type": "commonjs",
@@ -33,7 +33,7 @@
   "types": "./dist/index.d.ts",
   "bin": "./dist/sh.js",
   "scripts": {
-    "build": "yarn clean && yarn version patch && yarn run build:cjs",
+    "build": "yarn clean && npm version patch --no-git-tag-version && yarn run build:cjs",
     "build:cjs": "node tools/cleanup cjs && tsc -p ./tsconfig.json && chmod +x ./dist/sh.js",
     "clean": "node tools/cleanup",
     "test": "jest --no-cache --runInBand",

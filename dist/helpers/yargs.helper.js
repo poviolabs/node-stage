@@ -89,7 +89,10 @@ async function loadYargsConfig(cls, _argv, configDefaultBase) {
             argv[name] = o.default;
         }
     }
-    argv.release = await (0, git_helper_1.getRelease)(argv.pwd, argv.releaseStrategy);
+    argv.release = argv.release =
+        config.release ||
+            process.env.RELEASE ||
+            (await (0, git_helper_1.getRelease)(argv.pwd, argv.releaseStrategy));
     argv.config = config;
     return argv;
 }
