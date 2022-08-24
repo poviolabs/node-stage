@@ -172,7 +172,7 @@ function loadEnvironmentIntoConfig(config, environment, prefix = "app" || false)
             }
             // we have a simple value to set
             if (p[n] !== undefined) {
-                if (typeof p[n] === "object") {
+                if (p[n] !== null && typeof p[n] === "object") {
                     throw new Error(`Tried to override config structure with env: ${key}`);
                 }
                 // we probably have a simple value
