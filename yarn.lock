@@ -838,9 +838,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@poviolabs/node-stage@workspace:.":
+"@povio/node-stage@workspace:.":
   version: 0.0.0-use.local
-  resolution: "@poviolabs/node-stage@workspace:."
+  resolution: "@povio/node-stage@workspace:."
   dependencies:
     "@jest/types": ^28.1.1
     "@swc/core": ^1.2.204
@@ -4636,7 +4636,7 @@ __metadata:
 
 "typescript@patch:typescript@4.7.4#~builtin<compat/typescript>":
   version: 4.7.4
-  resolution: "typescript@patch:typescript@npm%3A4.7.4#~builtin<compat/typescript>::version=4.7.4&hash=7ad353"
+  resolution: "typescript@patch:typescript@npm%3A4.7.4#~builtin<compat/typescript>::version=4.7.4&hash=701156"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
