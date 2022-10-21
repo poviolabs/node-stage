@@ -1,7 +1,7 @@
 {
-  "name": "@poviolabs/node-stage",
-  "version": "2.0.5",
-  "packageManager": "yarn@3.2.1",
+  "name": "@povio/node-stage",
+  "version": "2.0.6",
+  "packageManager": "yarn@3.2.4",
   "type": "commonjs",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -67,7 +67,8 @@
     "type": "git"
   },
   "contributors": [
-    "Marko Zabreznik <marko.zabreznik@povio.com>"
+    "Marko Zabreznik <marko.zabreznik@povio.com>",
+    "Adrian Jarc <adrian.jarc@povio.com>"
   ],
   "peerDependenciesMeta": {
     "chalk": {
